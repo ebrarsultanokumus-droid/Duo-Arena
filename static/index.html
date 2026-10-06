@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>DUO ARENA</title>
+<meta name="theme-color" content="#140b2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DUO ARENA">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/img/icon192.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- ============ INTRO ============ -->
+<section id="intro" class="screen active">
+  <canvas id="introFx"></canvas>
+  <div class="intro-stage">
+    <img class="intro-char left" src="/img/full_a.png" alt="">
+    <img class="intro-char right" src="/img/full_b.png" alt="">
+    <div class="intro-logo">
+      <div class="logo-emblem big"></div>
+      <h1 class="wordmark"><span class="w1">DUO</span><span class="w2">ARENA</span></h1>
+      <p class="tagline">Zu zweit. Gegeneinander. Zusammen.</p>
+    </div>
+    <div class="vs-flash">VS</div>
+  </div>
+  <button id="introGo" class="tap-start">Tippen zum Starten</button>
+</section>
+
+<!-- ============ PROFIL WÄHLEN ============ -->
+<section id="onboard" class="screen">
+  <div class="onboard-inner">
+    <div class="mini-logo"><div class="logo-emblem"></div><span>DUO ARENA</span></div>
+    <h2 id="obTitle">Wer spielt hier?</h2>
+    <div id="obProfiles" class="ob-profiles"></div>
+    <button id="obNewBtn" class="btn ghost wide">＋ Neues Profil erstellen</button>
+    <form id="obForm" class="ob-form hidden" autocomplete="off">
+      <label class="lbl">Dein Benutzername</label>
+      <input id="obName" maxlength="18" placeholder="z. B. Yasi" required>
+      <label class="lbl">Wähle deinen Charakter</label>
+      <div class="char-pick">
+        <button type="button" class="char-opt" data-char="a"><img src="/img/full_a.png" alt=""><span>Charakter 1</span></button>
+        <button type="button" class="char-opt" data-char="b"><img src="/img/full_b.png" alt=""><span>Charakter 2</span></button>
+      </div>
+      <label class="lbl">Deine Farbe</label>
+      <div class="color-pick" id="obColors"></div>
+      <button class="btn primary wide" type="submit">Los geht's 🚀</button>
+    </form>
+    <p class="conn-note" id="obConn">Verbinde…</p>
+  </div>
+</section>
+
+<!-- ============ HAUPT-APP ============ -->
+<section id="main" class="screen">
+  <header class="topbar">
+    <div class="mini-logo"><div class="logo-emblem"></div><span>DUO ARENA</span></div>
+    <div class="top-right">
+      <div class="coins" id="coinBox">🪙 <b id="coinCount">0</b></div>
+      <button class="avatar-btn" id="meBtn"><canvas width="88" height="88" id="meAvatar"></canvas></button>
+    </div>
+  </header>
+
+  <div class="views">
+    <!-- Spiele -->
+    <div class="view active" id="view-home">
+      <div class="duo-card" id="duoCard"></div>
+      <h3 class="sec-title">Live gegeneinander <span class="pill live">LIVE</span></h3>
+      <div class="game-grid" id="gridDuel"></div>
+      <h3 class="sec-title">Solo-Rekordjagd</h3>
+      <div class="game-grid" id="gridSolo"></div>
+      <div class="foot-note">Gemacht mit 💗 für euch zwei</div>
+    </div>
+
+    <!-- Highscores -->
+    <div class="view" id="view-scores">
+      <h2 class="view-title">Highscores</h2>
+      <div id="scoreBoard"></div>
+    </div>
+
+    <!-- Outfits -->
+    <div class="view" id="view-shop">
+      <h2 class="view-title">Outfits & Style</h2>
+      <div class="shop-preview">
+        <canvas id="shopCanvas" width="520" height="520"></canvas>
+        <div class="shop-coins">🪙 <b id="shopCoins">0</b></div>
+      </div>
+      <div class="tabs" id="shopTabs"></div>
+      <div class="shop-items" id="shopItems"></div>
+    </div>
+
+    <!-- Profil -->
+    <div class="view" id="view-profile">
+      <h2 class="view-title">Profil</h2>
+      <div id="profileBox"></div>
+    </div>
+  </div>
+
+  <nav class="bottomnav">
+    <button data-view="home" class="active"><i>🎮</i><span>Spiele</span></button>
+    <button data-view="scores"><i>🏆</i><span>Scores</span></button>
+    <button data-view="chat" class="chat-tab"><i>💬</i><span>Chat</span><b class="badge hidden" id="chatBadge">0</b></button>
+    <button data-view="shop"><i>👑</i><span>Outfits</span></button>
+    <button data-view="profile"><i>👤</i><span>Profil</span></button>
+  </nav>
+</section>
+
+<!-- ============ SPIEL-OVERLAY ============ -->
+<section id="game" class="screen">
+  <canvas id="gameCanvas"></canvas>
+  <div class="ghud">
+    <button class="ghud-btn" id="gExit" aria-label="Zurück">✕</button>
+    <div class="ghud-mid" id="gHudMid"></div>
+    <button class="ghud-btn" id="gChat" aria-label="Chat">💬<b class="badge hidden" id="gChatBadge">0</b></button>
+  </div>
+  <div class="emote-bar hidden" id="emoteBar"></div>
+  <div class="gcontrols" id="gControls"></div>
+  <div class="gpanel hidden" id="gPanel"></div>
+  <div class="gbanner hidden" id="gBanner"></div>
+  <div class="rotate-hint hidden" id="rotateHint"><div>📱↻</div><p>Dreh dein Handy quer für das beste Spielgefühl</p><button class="btn small ghost" id="rotateOk">Trotzdem spielen</button></div>
+</section>
+
+<!-- ============ CHAT ============ -->
+<aside id="chat" class="drawer">
+  <div class="drawer-head">
+    <div class="chat-who" id="chatWho"></div>
+    <button class="icon-btn" id="chatClose">✕</button>
+  </div>
+  <div class="chat-list" id="chatList"></div>
+  <div class="chat-typing hidden" id="chatTyping">tippt…</div>
+  <div class="chat-quick" id="chatQuick"></div>
+  <form class="chat-form" id="chatForm" autocomplete="off">
+    <input id="chatInput" maxlength="500" placeholder="Nachricht schreiben…">
+    <button class="send" type="submit">➤</button>
+  </form>
+</aside>
+<div id="drawerShade" class="shade"></div>
+
+<div id="modal" class="modal hidden"></div>
+<div id="toasts"></div>
+
+<script src="/js/core.js"></script>
+<script src="/js/draw.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/games/soccer.js"></script>
+<script src="/js/games/airhockey.js"></script>
+<script src="/js/games/dropzone.js"></script>
+<script src="/js/games/connect4.js"></script>
+<script src="/js/games/maumau.js"></script>
+<script src="/js/games/pacman.js"></script>
+<script src="/js/games/runner.js"></script>
+<script>DA.boot();</script>
+</body>
+</html>

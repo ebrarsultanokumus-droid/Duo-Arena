@@ -1,0 +1,1 @@
+# DUO ARENA braucht keine externen Pakete – nur Python 3.8+.

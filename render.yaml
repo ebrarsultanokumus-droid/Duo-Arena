@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: duoarena
+    runtime: python
+    plan: free
+    buildCommand: echo "Keine Pakete noetig"
+    startCommand: python app.py
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: GIST_ID
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false

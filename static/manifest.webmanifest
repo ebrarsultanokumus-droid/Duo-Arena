@@ -1,0 +1,14 @@
+{
+  "name": "DUO ARENA",
+  "short_name": "DUO ARENA",
+  "description": "Zu zweit. Gegeneinander. Zusammen.",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#140b2e",
+  "theme_color": "#140b2e",
+  "icons": [
+    { "src": "/img/icon192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/img/icon512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
